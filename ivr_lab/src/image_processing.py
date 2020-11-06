@@ -56,29 +56,23 @@ class image_converter:
         cv2.imshow('window', cv_image)
         cv2.waitKey(3)
 
-        cv2.namedWindow("output", cv2.WINDOW_NORMAL)
+        blue_lower_range = np.array([90, 0, 0])
+        blue_upper_range = np.array([255, 70, 70])
 
-        #blue_lower_range = np.array([110,50,50])
-        #blue_upper_range = np.array([130,255,255])
-
-        #green_lower_range = np.array([])
-        #green_upper_range = np.array([])
+        green_lower_range = np.array([0, 60, 0])
+        green_upper_range = np.array([50, 255, 50])
 
         red_lower_range = np.array([0, 0, 40])
         red_upper_range = np.array([30, 30, 255])
 
-        #yellow_lower_range = np.array([])
-        #yellow_upper_range = np.array([])
+        find_blue = cv2.inRange(cv_image, blue_lower_range, blue_upper_range)
+        cv2.imshow("output", find_blue)
 
-        mask = cv2.inRange(cv_image, red_lower_range, red_upper_range)
-        threshold2 = cv2.resize(mask, (600, 600))
-        cv2.imshow("output", threshold2)
-        cv2.waitKey(3)
+        find_red = cv2.inRange(cv_image, red_lower_range, red_upper_range)
+        cv2.imwrite("red.png", find_red)
 
-        mask = cv2.inRange(cv_image, red_lower_range, red_upper_range)
-        threshold2 = cv2.resize(mask, (600, 600))
-        cv2.imshow("output", threshold2)
-        cv2.waitKey(3)
+        find_green = cv2.inRange(cv_image, green_lower_range, green_upper_range)
+        cv2.imwrite("output", find_green)
 
         # change te value of self.joint.data to your estimated value from thew images once you have finalized the code
         self.joints = Float64MultiArray()
