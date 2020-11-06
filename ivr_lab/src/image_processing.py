@@ -53,8 +53,8 @@ class image_converter:
         except CvBridgeError as e:
             print(e)
 
-        cv2.imshow('window', cv_image)
-        cv2.waitKey(3)
+        #cv2.imshow('window', cv_image)
+        #cv2.waitKey(3)
 
         blue_lower_range = np.array([90, 0, 0])
         blue_upper_range = np.array([255, 70, 70])
@@ -73,6 +73,20 @@ class image_converter:
 
         find_green = cv2.inRange(cv_image, green_lower_range, green_upper_range)
         cv2.imwrite("output", find_green)
+
+        # finding the centre of the joint
+        M_red = cv2.moments(find_red)
+        red_x = int(M_red['m10']/M_red['m00'])
+        red_y = int(M_red['m01']/M_red['m00'])
+        print(red_x + ", " + red_y)
+        M_blue = cv2.moments(find_blue)
+        blue_x = int(M_blue['m10']/M_blue['m00'])
+        blue_y = int(M_blue['m01']/M_blue['m00'])
+        print(blue_x + ", " + blue_y)
+        M_green = cv2.moments(find_green)
+        green_x = int(M_green['m10']/M_green['m00'])
+        green_y = int(M_green['m01']/M_green['m00'])
+        print(green_x + ", " + green_y)
 
         # change te value of self.joint.data to your estimated value from thew images once you have finalized the code
         self.joints = Float64MultiArray()
